@@ -1,0 +1,1 @@
+rootProject.name = "chzzk-openapi-kotlin"
