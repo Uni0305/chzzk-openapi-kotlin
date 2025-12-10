@@ -33,7 +33,8 @@ Located in `src/main/kotlin/org/mokokomc/chzzk/model/`:
 - Response wrappers: `ChzzkResponse<T>`, `SimpleResponse`, `Page`, `CursorPage`
 - Domain models organized by feature: `Channel.kt`, `Live.kt`, `Chat.kt`, `Drops.kt`, `Session.kt`
 - Enums for API constants: `UserRole`, `SessionStatus`, `CategoryType`, `ChatAvailableCondition`, `FulfillmentStatus`
-- All data classes use nullable fields where API might omit values
+- All data classes use **nullable fields** where API might omit values - this is the error handling strategy
+- Request/response naming: `*Request` suffix for request bodies, `*Response` suffix for responses (e.g., `UpdateLiveSettingRequest`, `LiveListResponse`)
 
 ### Testing Strategy
 
@@ -53,29 +54,56 @@ Two test categories in `src/test/kotlin/org/mokokomc/chzzk/test/`:
 # Run all tests
 ./gradlew test
 
-# Build fat JAR with dependencies
+# Build fat JAR with dependencies (shadow plugin)
 ./gradlew shadowJar
 
 # Clean and rebuild
 ./gradlew clean build
+
+# Run both build and test in one command (CI workflow)
+./gradlew shadowJar test
 ```
 
 Test reports are generated at `build/reports/tests/test/index.html`.
 
+### Publishing and Release
+
+- **JitPack integration**: Configured via `jitpack.yml` (requires Java 21)
+- **GitHub Actions**: `.github/workflows/build.yml` runs on every push/PR
+  - Builds shadow JAR and runs tests
+  - Creates GitHub releases on tag push (`refs/tags/*`)
+  - Uploads JAR artifacts automatically
+- **Shadow JAR**: Regular JAR is disabled (`tasks.jar { enabled = false }`), only shadow JAR is published
+- **Maven publishing**: Uses `maven-publish` plugin with shadow component
+
 ### Adding New API Endpoints
 
 1. Define Retrofit interface in appropriate `*Api.kt` file
-2. Add corresponding data models in `model/` folder
+2. Add corresponding data models in `model/` folder with nullable fields where appropriate
 3. Expose the API as a lazy property in `ChzzkClient` if it's a new domain
 4. Create integration test in `test/integration/` using MockWebServer
 5. Use suspend functions for all API calls (coroutine-native)
 
+Example from `ChannelApi.kt`:
+
+```kotlin
+@GET("/open/v1/channels")
+suspend fun getChannels(
+    @Query("channelIds") channelIds: List<String>
+): ChannelListResponse
+```
+
 ### Common Patterns
 
 - **Pagination**: Use `@Query` parameters for `page`/`size` or `next`/`cursor` tokens
+  - Page-based: `getFollowers(page = 0, size = 30)`
+  - Cursor-based: `getLives(size = 20, next = "cursor-token")`
 - **Request bodies**: Define dedicated request data classes (e.g., `UpdateLiveSettingRequest`)
 - **Authentication requirements**: Document in KDoc whether endpoint needs Client auth or Access Token
 - **HTTP methods with body**: Use `@HTTP(method = "DELETE", hasBody = true)` for DELETE with request body
+  - Example: `removeRestrictedChannel` in `ChannelApi.kt`
+- **Nullable fields**: All optional/potentially-missing API fields use nullable types (`String?`, `Int?`)
+- **Enums for constants**: Use sealed enums for API constants (e.g., `CategoryType.GAME`, `UserRole.STREAMING_CHANNEL_MANAGER`)
 
 ## Key Conventions
 
@@ -116,6 +144,7 @@ require(clientId != null || accessToken != null) {
 - Base URL: `https://openapi.chzzk.naver.com` (configurable)
 - JSON serialization: Moshi with `KotlinJsonAdapterFactory` for data class support
 - Default timeouts: 30 seconds (connect/read/write)
+- Content-Type: `application/json` added automatically by interceptors
 
 ### Test Isolation
 
@@ -125,6 +154,8 @@ Integration tests use MockWebServer with setup/teardown lifecycle:
 @BeforeEach fun setup() { mockWebServer.start() }
 @AfterEach fun tearDown() { mockWebServer.close() }
 ```
+
+Each test enqueues mock responses with `mockWebServer.enqueue(MockResponse())` and verifies requests/responses.
 
 ## External Dependencies
 
