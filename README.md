@@ -567,6 +567,6 @@ fun main() = runBlocking {
 
 ## 관련 링크
 
-- [Chzzk OpenAPI 공식 문서](https://openapi.chzzk.naver.com)
+- [Chzzk OpenAPI 공식 문서](https://chzzk.gitbook.io/chzzk/)
 - [Retrofit 공식 문서](https://square.github.io/retrofit/)
 - [Kotlin Coroutines 가이드](https://kotlinlang.org/docs/coroutines-guide.html)
