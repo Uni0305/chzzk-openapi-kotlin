@@ -19,17 +19,99 @@
 
 ## 설치
 
-### 소스에서 빌드
+[![JitPack](https://jitpack.io/v/Uni0305/chzzk-openapi-kotlin.svg)](https://jitpack.io/#Uni0305/chzzk-openapi-kotlin)
 
-현재 Maven Central에 배포되지 않았으므로, 소스를 직접 클론하여 빌드해야 합니다:
+### JitPack을 통한 설치 (권장)
+
+JitPack을 사용하면 GitHub 리포지토리에서 직접 라이브러리를 의존성으로 추가할 수 있습니다.
+
+#### Gradle (Kotlin DSL)
+
+`settings.gradle.kts` 또는 `build.gradle.kts`에 JitPack 저장소를 추가:
+
+```kotlin
+repositories {
+    mavenCentral()
+    maven { url = uri("https://jitpack.io") }
+}
+```
+
+의존성 추가:
+
+```kotlin
+dependencies {
+    implementation("com.github.Uni0305:chzzk-openapi-kotlin:1.0.0")
+}
+```
+
+#### Gradle (Groovy)
+
+`build.gradle`에 JitPack 저장소를 추가:
+
+```groovy
+repositories {
+    mavenCentral()
+    maven { url 'https://jitpack.io' }
+}
+```
+
+의존성 추가:
+
+```groovy
+dependencies {
+    implementation 'com.github.Uni0305:chzzk-openapi-kotlin:1.0.0'
+}
+```
+
+#### Maven
+
+`pom.xml`에 JitPack 저장소를 추가:
+
+```xml
+<repositories>
+    <repository>
+        <id>jitpack.io</id>
+        <url>https://jitpack.io</url>
+    </repository>
+</repositories>
+```
+
+의존성 추가:
+
+```xml
+<dependency>
+    <groupId>com.github.Uni0305</groupId>
+    <artifactId>chzzk-openapi-kotlin</artifactId>
+    <version>1.0.0</version>
+</dependency>
+```
+
+### 버전 지정 방법
+
+JitPack에서는 다양한 방식으로 버전을 지정할 수 있습니다:
+
+- **릴리즈 태그**: `1.0.0`, `v1.0.0` - 안정적인 버전 사용 (권장)
+- **특정 커밋**: `a1b2c3d` - 특정 커밋 해시 사용
+- **브랜치 최신**: `main-SNAPSHOT`, `master-SNAPSHOT` - 최신 개발 버전 (개발용)
+
+예시:
+```kotlin
+implementation("com.github.Uni0305:chzzk-openapi-kotlin:main-SNAPSHOT")
+```
+
+> **참고**: 최초 빌드 시 JitPack이 프로젝트를 빌드하므로 다운로드에 시간이 걸릴 수 있습니다. 안정적인 릴리즈 태그 사용을 권장합니다.
+
+### 로컬 빌드 (개발자용)
+
+프로젝트를 직접 수정하거나 기여하려는 경우 로컬에서 빌드할 수 있습니다:
 
 ```bash
-git clone <repository-url>
+git clone https://github.com/Uni0305/chzzk-openapi-kotlin.git
 cd chzzk-openapi-kotlin
 ./gradlew build
 ```
 
-### Fat JAR 빌드
+#### Fat JAR 빌드
 
 의존성이 포함된 단일 JAR 파일을 빌드하려면:
 
@@ -38,14 +120,6 @@ cd chzzk-openapi-kotlin
 ```
 
 빌드된 JAR는 `build/libs/chzzk-openapi-kotlin-1.0-SNAPSHOT-all.jar`에 생성됩니다.
-
-### Gradle 의존성 (향후 배포 시)
-
-```kotlin
-dependencies {
-    implementation("org.mokokomc:chzzk-openapi-kotlin:1.0.0")
-}
-```
 
 ## 빠른 시작
 
