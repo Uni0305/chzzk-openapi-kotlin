@@ -33,6 +33,14 @@ tasks.test {
     useJUnitPlatform()
 }
 
+tasks.jar {
+    enabled = false
+}
+
+tasks.shadowJar {
+    archiveClassifier = ""
+}
+
 publishing {
     publications {
         create<MavenPublication>("shadow") {
