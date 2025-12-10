@@ -1,5 +1,10 @@
 # Chzzk OpenAPI Kotlin Client
 
+[![GitHub Actions Workflow Status](https://img.shields.io/github/actions/workflow/status/Uni0305/chzzk-openapi-kotlin/build.yml?style=for-the-badge)](https://github.com/Uni0305/chzzk-openapi-kotlin/actions)
+[![GitHub License](https://img.shields.io/github/license/Uni0305/chzzk-openapi-kotlin?style=for-the-badge)](LICENSE.md)
+[![GitHub Release](https://img.shields.io/github/v/release/Uni0305/chzzk-openapi-kotlin?style=for-the-badge)](https://github.com/Uni0305/chzzk-openapi-kotlin/releases)
+[![JitPack](https://img.shields.io/jitpack/version/com.github.Uni0305/chzzk-openapi-kotlin?style=for-the-badge)](https://jitpack.io/#Uni0305/chzzk-openapi-kotlin)
+
 네이버 치지직(Chzzk) 스트리밍 플랫폼의 OpenAPI를 위한 Kotlin SDK입니다. Retrofit, OkHttp, Moshi를 기반으로 타입 안전하고 코루틴 기반의 HTTP 클라이언트를 제공합니다.
 
 ## 주요 기능
@@ -18,8 +23,6 @@
 - Gradle 8.0+
 
 ## 설치
-
-[![JitPack](https://jitpack.io/v/Uni0305/chzzk-openapi-kotlin.svg)](https://jitpack.io/#Uni0305/chzzk-openapi-kotlin)
 
 ### JitPack을 통한 설치 (권장)
 
