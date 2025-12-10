@@ -40,7 +40,7 @@ repositories {
 
 ```kotlin
 dependencies {
-    implementation("com.github.Uni0305:chzzk-openapi-kotlin:1.0.0")
+    implementation("com.github.Uni0305:chzzk-openapi-kotlin:VERSION")
 }
 ```
 
@@ -59,7 +59,7 @@ repositories {
 
 ```groovy
 dependencies {
-    implementation 'com.github.Uni0305:chzzk-openapi-kotlin:1.0.0'
+    implementation 'com.github.Uni0305:chzzk-openapi-kotlin:VERSION'
 }
 ```
 
@@ -82,7 +82,7 @@ dependencies {
 <dependency>
     <groupId>com.github.Uni0305</groupId>
     <artifactId>chzzk-openapi-kotlin</artifactId>
-    <version>1.0.0</version>
+    <version>VERSION</version>
 </dependency>
 ```
 
@@ -90,11 +90,12 @@ dependencies {
 
 JitPack에서는 다양한 방식으로 버전을 지정할 수 있습니다:
 
-- **릴리즈 태그**: `1.0.0`, `v1.0.0` - 안정적인 버전 사용 (권장)
+- **릴리즈 태그**: `v1.0.0` - 안정적인 버전 사용 (권장)
 - **특정 커밋**: `a1b2c3d` - 특정 커밋 해시 사용
 - **브랜치 최신**: `main-SNAPSHOT`, `master-SNAPSHOT` - 최신 개발 버전 (개발용)
 
 예시:
+
 ```kotlin
 implementation("com.github.Uni0305:chzzk-openapi-kotlin:main-SNAPSHOT")
 ```
